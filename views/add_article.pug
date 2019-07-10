@@ -1,0 +1,14 @@
+extends layout
+	
+block content
+	h1 #{title}
+	form(method='POST', action='/articles/add', enctype='multipart/form-data')
+		.form-group
+			input.form-control(name='title', type='text', placeholder='Enter Title')
+		.form-group
+			textarea.form-control(name='body', placeholder='Body Of Article')
+		.btn.btn-secondary
+			span file
+			input.btn.btn(name='Avartar', type='file')
+		br
+		input.btn.btn-primary(type="submit", value="submit")

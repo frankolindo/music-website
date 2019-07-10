@@ -1,0 +1,18 @@
+extends layout
+	
+block content
+    .card(width='500px')
+        .card-body
+            img.card-img-top(src=article.image, style='height:300px')
+            br
+            h1.card-title= article.title
+            h5 Wrtten by #{author}
+            p=article.body= article.title
+            hr
+            if user
+                .btn.btn-secondary.like-article(data-id=article._id) Like
+                #data.btn.btn-danger= article.like 
+                if user.id ==article.author
+                    a.btn.btn-default(href='/article/edit/'+article._id) Edit
+                    a.btn.btn-default(href='/upload/'+article._id) Add image
+                    a.btn.btn-danger.delete-article(href='#', data-id=article._id) Delete

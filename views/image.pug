@@ -1,0 +1,15 @@
+extends layout
+	
+block content
+    .container  
+        h1 file upload
+        form(action='/upload/'+article._id, method='POST', enctype='multipart/form-data')
+            .btn
+                span file
+                input.btn.btn(type='file', name='Avartar')
+            .btn
+                span file
+                input.btn.btn(type='file', name='Avartar')
+            .file-path-wrapper
+            input(type='submit', value='submit').btn.btn-primary
+    

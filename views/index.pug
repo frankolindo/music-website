@@ -1,0 +1,72 @@
+extends layout
+
+block content
+  .wrapper#wrapper
+    .box1#box1
+      a.home(href='/')
+        i.fa.fa-home
+        span.menu-list Home
+      a.home(href='#')
+        i.fa.fa-home
+        span.menu-list About
+      a.home(href='#',)
+        i.fa.fa-home
+        span.menu-list Contact
+      a.home(href='#',)
+        i.fa.fa-home
+        span.menu-list Home
+    .box2
+      .big
+        img#bigimg(src='/uploads/Avartar-1561487897488.jpg')
+        #setRange
+          span#rangeValue 0
+          span#rangeEndValue 0
+          input.range#range(type='range', value='0')
+        #button
+          button#download
+            .down
+              .load#loading
+            .ing
+            span.tooltip Download
+          button#like
+            i.fa.fa-heart
+            br
+            span(style='color:#fff;opacity:0.5;font-size:18px;') 100k
+            span.tooltip Love
+          button#playbtn
+            #play
+            #pause
+            #btn
+            span.tooltip#tooltip Play
+          button#love
+            i.fa.fa-comments
+            br
+            span(style='color:#fff;opacity:0.5;font-size:18px;') 100k
+            span.tooltip Comment
+          button#options
+            .options
+            span.tooltip
+              a(href='#') Options
+      each article, i in articles
+        .one
+          a(href="/article/"+article._id)
+            .pix
+              img(src=article.image)
+            .song= article.title
+            .artist Artist name
+            .artist(style='margin-top:0px;') 3.4kplays
+              span "6hours ago"
+    .box3 Box3
+  //- h1 #{title}
+  //- .card(style='width: 25rem;')
+  //-   ul.list-group.list-group-flush
+  //-    each article, i in articles
+  //-     li.list-group-item
+  //-     a(href="/article/"+article._id)= article.title
+  //-       br
+  //-       img.articleImg(src=article.image, alt='no image')
+  //- .container
+  //-   .row
+  //-     each article, i in articles
+  //-       .col-sm
+  //-         img(src=article.image, width='300px', height='100px')

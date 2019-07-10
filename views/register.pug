@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    h1 Register
+    form(method='POST', action='/users/register')
+        #form-group
+            input.form-control(name='name', type='text', placeholder='Enter Name')
+        #form-group
+            input.form-control(name='email', type='text', placeholder='Enter Email')
+        #form-group
+            input.form-control(name='username', type='text', placeholder='Enter Username')
+        #form-group
+            input.form-control(name='password', type='password', placeholder='Enter Password')
+        #form-group
+            input.form-control(name='password2', type='password', placeholder='Confirm Password')
+        br
+        input.btn.btn-primary(type='submit', value='Submit')
