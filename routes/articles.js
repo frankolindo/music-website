@@ -190,8 +190,7 @@ router.get('/article/like/:id', function(req, res){
 router.post('/article/like/:id', function(req, res){
 	let query = {_id:req.params.id};
 	let articles = {};
-	articles.like[0] = 1;
-	articles.like[1] = 'Hellow Eror';
+	articles.like = 1;
 	Article.updateOne(query, {$inc:articles}, function(err){
 		if(err){
 			console.log(err);
@@ -201,6 +200,21 @@ router.post('/article/like/:id', function(req, res){
 		}
 	});
 });
+//Unlike article
+router.post('/article/unlike/:id', function(req, res){
+	let query = {_id:req.params.id};
+	let articles = {};
+	articles.like = -1;
+	Article.updateOne(query, {$inc:articles}, function(err){
+		if(err){
+			console.log(err);
+		} else{
+			//console.log(articles.like);
+			res.send(articles);
+		}
+	});
+});
+
 
 //Deleting article
 router.delete('/article/:id', function(req, res){
@@ -232,6 +246,19 @@ router.get('/article/:id', ensureAuthenticated, function(req, res){
 				author:user.name
 			});
 		});
+	});
+});
+
+// Searching for Articles
+router.post('/article/search', function(req, res){
+	let search = req.body.mongoSearch;
+	//res.render('search', {title:search});
+	Article.find({$text: {$search: search}}, function(err, article){
+		if(err){
+			console.log(err);
+		} else{
+			res.render('search', {articles:article})
+		}
 	});
 });
 

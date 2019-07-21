@@ -17,19 +17,30 @@ $(document).ready(function(){
 	$('.like-article').on('click', function(e){
 		$target = $(e.target);
 		const id = ($target.attr('data-id'));
-		$.ajax({
-			type: 'POST',
-			url: '/article/like/'+id,
-			success: function(data){
-				console.log(data);
-			}
-		});
+		let check = $('.like-article').text();
+		if(check == 'Like'){
+			$.ajax({
+				type: 'POST',
+				url: '/article/like/'+id,
+				success: function(data){
+					$('.like-article').html('Unlike');
+				}
+			});
+		} else if(check == 'Unlike'){
+			$.ajax({
+				type: 'POST',
+				url: '/article/unlike/'+id,
+				success: function(data){
+					$('.like-article').html('Like');
+				}
+			});
+		}
+		
 		$.ajax({
 			type: 'GET',
 			url: '/article/like/'+id,
 			dataType: 'json',
 			success: function(data){
-				//console.log(data);
 				$('#data').html(data.like);
 			},
 			error: function(err){
@@ -37,6 +48,13 @@ $(document).ready(function(){
 			}
 		});
 	});
+	// $('#searchBtn').on('click', function(){
+	// 	$.ajax({
+	// 		type: 'POST',
+	// 		url: '/article/search',
+	// 		data: $('.inner').val()
+	// 	});
+	// });
 });
 
 
