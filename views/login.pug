@@ -4,8 +4,8 @@ block content
     h1 Login
     form(method='POST', action='/users/login')
         #form-group
-            input.form-control(name='username', type='text', placeholder='Enter Username')
+            input.form-control(name='username', type='text', placeholder='Enter Username', required='true')
         #form-group
-            input.form-control(name='password', type='password', placeholder='Enter Password')
+            input.form-control(name='password', type='password', placeholder='Enter Password', required='true')
         br
         input.btn.btn-primary(type='submit', value='Submit')

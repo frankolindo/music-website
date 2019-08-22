@@ -21,7 +21,16 @@ let articleSchema = mongoose.Schema({
     like:{
         type: Number,
         required: false
-    }
+    },
+    comments:[{
+       _id:String,
+       name:String,
+       comment:String,
+       replies:[{
+        //    _id:String,
+        //    reply:String
+       }]
+    }]
 });
 
 let Article = module.exports = mongoose.model('Article', articleSchema);

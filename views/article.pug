@@ -1,17 +1,28 @@
 extends layout
 	
 block content
-    .card(width='500px')
+    .card(width='')
         .card-body
             img.card-img-top(src=article.image, style='height:300px')
             br
             h1.card-title= article.title
-            h5 Wrtten by #{author}
-            p=article.body= article.title
+            p=article.body= article.body
+            h5 Written by #{author}
             hr
+            .btn.btn-secondary.like-article(data-id=article._id) Like
+            #data.btn.btn-danger= article.like 
+            ul()
+                each command, i in article.comments
+                    li(style='list-style-type:url(#{article.image})').comment-name=command.name
+                        div.comment-data(style='display:block;')= command.comment
+            .comments
+                .submit-comments
+                    form(method='POST', action='/article/comment/'+article._id)
+                        textarea.comment-text(name="comments", required='true')
+                        br
+                        input(type="submit", value="Comment", data-id=article._id).commentbtn
+            .btn.btn-default#comment-btn Add Comments
             if user
-                .btn.btn-secondary.like-article(data-id=article._id) Like
-                #data.btn.btn-danger= article.like 
                 if user.id ==article.author
                     a.btn.btn-default(href='/article/edit/'+article._id) Edit
                     a.btn.btn-default(href='/upload/'+article._id) Add image

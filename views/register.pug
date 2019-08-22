@@ -4,14 +4,14 @@ block content
     h1 Register
     form(method='POST', action='/users/register')
         #form-group
-            input.form-control(name='name', type='text', placeholder='Enter Name')
+            input.form-control(name='name', type='text', placeholder='Enter Name', required='true')
         #form-group
-            input.form-control(name='email', type='text', placeholder='Enter Email')
+            input.form-control(name='email', type='text', placeholder='Enter Email', required='true')
         #form-group
-            input.form-control(name='username', type='text', placeholder='Enter Username')
+            input.form-control(name='username', type='text', placeholder='Enter Username', required='true')
         #form-group
-            input.form-control(name='password', type='password', placeholder='Enter Password')
+            input.form-control(name='password', type='password', placeholder='Enter Password', required='true')
         #form-group
-            input.form-control(name='password2', type='password', placeholder='Confirm Password')
+            input.form-control(name='password2', type='password', placeholder='Confirm Password', required='true')
         br
         input.btn.btn-primary(type='submit', value='Submit')

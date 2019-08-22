@@ -1,4 +1,24 @@
 $(document).ready(function(){
+	// Still under construction
+	// checking if the search was not found
+	if($('.searchlink').text() === '' || $('.searchlink').text() === null){
+		$('.notting').html('Noting Found' + $('#mongoSearch').val());
+		$('.notting').css({
+			"textAlign":"center"
+		});
+	};
+	// Removing the flash message sent from the server
+	// if($("#flashmsg").style.display == "none"){
+	// 	console.log("it worked");
+	// }
+
+	// $('.removemsg').on('click', function(){
+	// 	$("#flashmsg").hide();
+	// });
+	$('.comments').hide();
+	$('#comment-btn').on('click', function(){
+		$('.comments').show(1000);
+	});
 	$('.delete-article').on('click', function(e){
 		$target = $(e.target);
 		const id = ($target.attr('data-id'));
@@ -22,39 +42,51 @@ $(document).ready(function(){
 			$.ajax({
 				type: 'POST',
 				url: '/article/like/'+id,
-				success: function(data){
+				success: function(response){
 					$('.like-article').html('Unlike');
+				},
+				error: function(response){
+					window.location.href='/users/login';
 				}
 			});
 		} else if(check == 'Unlike'){
 			$.ajax({
 				type: 'POST',
 				url: '/article/unlike/'+id,
-				success: function(data){
+				success: function(response){
 					$('.like-article').html('Like');
 				}
 			});
 		}
-		
-		$.ajax({
-			type: 'GET',
-			url: '/article/like/'+id,
-			dataType: 'json',
-			success: function(data){
-				$('#data').html(data.like);
-			},
-			error: function(err){
-				console.log('err');
-			}
-		});
+		setTimeout(function(){
+			$.ajax({
+				type: 'GET',
+				url: '/article/like/'+id,
+				success: function(data){
+					$('#data').html(data.like);
+				}
+			});
+		}, 500);
 	});
-	// $('#searchBtn').on('click', function(){
-	// 	$.ajax({
-	// 		type: 'POST',
-	// 		url: '/article/search',
-	// 		data: $('.inner').val()
-	// 	});
-	// });
+
+	
+	$('.commentbtn').on('click', function(e){
+		$target = $(e.target);
+		const id = ($target.attr('data-id'));
+		setTimeout(function(){
+			$.ajax({
+				type: 'GET',
+				url: '/article/comment/'+id,
+				success: function(data){
+					console.log(data);
+				},
+				error: function(error){
+					console.log(error);
+				}
+			});
+		}, 1000);
+		$('.comments').hide(1000);
+	});
 });
 
 

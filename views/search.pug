@@ -1,5 +1,6 @@
 extends layout
 	
 block content
+    h1.notting
     each article, i in articles
-        a(href="/article/"+article._id)=article.title
+        a.searchlink(href="/article/"+article._id)=article.title

@@ -122,6 +122,10 @@ router.post('/articles/add', function(req, res){
 				articles.body = req.body.body;
 				articles.image = file;
 				articles.like = 0;
+				//articles.comments = {_id:'Odafe', comment:'This is Odafe"s comment'};
+				//articles.comments._id ='Franklin /ObjectId';
+				//articles.comments.comment = "This is the whole comments";
+				articles.comments.replies = {_id:"This is the id", reply:"This is the reply"};
 				articles.save(function(err){
 					if(err){
 						console.log(err);
@@ -172,8 +176,7 @@ router.post('/articles/edit/:id', function(req, res){
 	});
 });
 // Liking article
-router.get('/article/like/:id', function(req, res){
-
+router.get('/article/like/:id', ensureAuthenticated, function(req, res){
 	Article.findById(req.params.id, function(err, article){
 		if(err){
 			console.log(err);
@@ -188,6 +191,11 @@ router.get('/article/like/:id', function(req, res){
 
 //Posting the likes
 router.post('/article/like/:id', function(req, res){
+	if(!req.user._id){
+		req.flash('danger', 'Please Login');
+		res.redirect('/');
+	}
+
 	let query = {_id:req.params.id};
 	let articles = {};
 	articles.like = 1;
@@ -238,18 +246,18 @@ router.delete('/article/:id', function(req, res){
 	});
 });
 
-router.get('/article/:id', ensureAuthenticated, function(req, res){
+router.get('/article/:id', function(req, res){
 	Article.findById(req.params.id, function(err, article){
 		User.findById(article.author, function(err, user){
 			res.render('article', {
 				article:article, 
-				author:user.name
+				author:user.name,
 			});
 		});
 	});
 });
 
-// Searching for Articles
+// Searching for Articles 
 router.post('/article/search', function(req, res){
 	let search = req.body.mongoSearch;
 	//res.render('search', {title:search});
@@ -257,7 +265,37 @@ router.post('/article/search', function(req, res){
 		if(err){
 			console.log(err);
 		} else{
-			res.render('search', {articles:article})
+				res.render('search', {articles:article});
+		}
+	});
+});
+// Get the comment for my Ajax 
+router.get('/article/comment/:id', function(req, res){
+	Article.findById(req.params.id, function(err, article){
+		if(err){
+			console.log(err);
+		} else{
+			res.send(article)
+		}
+	});
+});
+
+// Comments section, Handling of all the comments on `~art`
+router.post('/article/comment/:id', ensureAuthenticated, function(req, res, next){
+	let liveComments = req.body.comments;
+	//let articles = {};
+	let NewComment = {_id:req.user._id, 
+						name:req.user.name,
+						comment:liveComments,
+						replies:[{_id: String, reply: String}]
+					};
+
+	let query = {_id:req.params.id};
+	Article.updateOne(query, { $push:{'comments':NewComment}}, function(err, result){
+		if(err){
+			console.log(err);
+		} else{
+			return true;
 		}
 	});
 });
